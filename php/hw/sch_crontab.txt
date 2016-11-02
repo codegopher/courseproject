@@ -1,0 +1,2 @@
+SHELL=/bin/bash
+* * * * * php /home/codemonkey/test_site/php/hw/artisan schedule:run >>/dev/null 2>&1

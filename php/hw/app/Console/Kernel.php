@@ -13,8 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        // Commands\Inspire::class,
-    ];
+        \App\Console\Commands\Inspire::class,
+      ];
 
     /**
      * Define the application's command schedule.
@@ -23,8 +23,9 @@ class Kernel extends ConsoleKernel
      * @return void
      */
     protected function schedule(Schedule $schedule)
-    {
-        // $schedule->command('inspire')
-        //          ->hourly();
+    {        
+        //$schedule->call(function(){error_log("Schedule closure works!");})->everyMinute();
+        //$schedule->exec('date')->everyMinute();
+        //$schedule->exec('touch some.txt && date >> some.txt')->everyMinute();
     }
 }
