@@ -6,6 +6,9 @@ use Illuminate\Support\ServiceProvider;
 use App\Task;
 use Mail;
 
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Message\AMQPMessage;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -17,28 +20,20 @@ class AppServiceProvider extends ServiceProvider
 
     public function rmq_boot() // Establishing connection with RabbitMQ
     {
-    	// Params for RabbitMQ connection
-	    $connection_params = array(
-	  		'host' => 'localhost',
-	  		'port' => 5672,
-	  		'vhost' => '/',
-	  		'login' => 'guest',
-	  		'password' => 'guest'
-		);
-	    $connection = new AMQPConnection($connection_params);
-		$connection->connect();
-		$channel = new AMQPChannel($connection);
-		$exchange = new AMQPExchange($channel);
-		$exchange->setName('test_exchange');
-		$exchange->setType(AMQP_EX_TYPE_DIRECT);
-		$exchange->setFlags(AMQP_DURABLE);
-		$exchange->declare();
-		$queue = new AMQPQueue($channel);
-		$queue->setName('first queue');
-		$queue->setFlags(AMQP_IFUNUSED | AMQP_AUTODELETE);
-		$queue->declare();
-		$result = $exchange->publish(json_encode("Hello world!"), "foo_key");
-		$connection->disconnect();
+    	error_log("Initializing RabbitMQ");
+		$connection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
+		$channel = $connection->channel();
+		$channel->queue_declare('email-msg', false, false, false, false);
+		$channel->queue_declare('tlg-msg', false, false, false, false);
+		$array1 = ['key1'=>'val1', 'key2'=>'val2'];
+		$array2 = ['key3'=>'val3', 'key4'=>'val4'];
+		$msg1 = new AMQPMessage(json_encode($array1));
+		$msg2 = new AMQPMessage(json_encode($array2));
+		// $msg = new AMQPMessage('Hello World!');
+		$channel->basic_publish($msg1, '', 'email-msg');
+		$channel->basic_publish($msg2, '', 'tlg-msg');
+		$channel->close();
+		$connection->close();
     }
 
     public function boot()

@@ -11,8 +11,6 @@
 |
 */
 
-// Rewrite this in RouteController
-
 Route::Get('/', 'RouteController@RootRequest');
 
 Route::Get('/main', 'RouteController@MainRequest');
