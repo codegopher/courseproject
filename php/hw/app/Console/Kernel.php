@@ -24,8 +24,17 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {        
-        //$schedule->call(function(){error_log("Schedule closure works!");})->everyMinute();
-        //$schedule->exec('date')->everyMinute();
-        //$schedule->exec('touch some.txt && date >> some.txt')->everyMinute();
+        $schedule->call(function(){
+            error_log("Sending overdue tasks...");
+            // Send tasks and mark them as sent in DB
+            /*
+            $ot = Task::overdue_tasks();
+            foreach ($ot as $t) {
+                // Send somehow
+                $t->hasbeensent = 1;
+                $t->save();
+            }
+            */
+        })->dailyAt('12:00');;
     }
 }

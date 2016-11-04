@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use DB; // костыль, но хотя бы в рамках ООП
+use DB; // just for make this look like OOP
 
 class User extends Authenticatable
 {
