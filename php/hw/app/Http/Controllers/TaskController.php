@@ -91,7 +91,7 @@ class TaskController extends Controller
 
               $task = Task::find($id);
               $task['isactive'] = false; // other users are not avaliable to take this task
-              $task->save(); // add this to attach() somehow
+              $task->save();
 
               return redirect('/home');
               break;
@@ -102,7 +102,7 @@ class TaskController extends Controller
 
               $task = Task::find($id);
               $task['isactive'] = true; // task is avaliable to be taken again
-              $task->save(); // add this to detach() somehow
+              $task->save();
 
               return redirect('/home');
               break;
