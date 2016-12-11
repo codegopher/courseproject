@@ -33,7 +33,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Курсач</a>
+          <a class="navbar-brand" href="#">Курсовой проект</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul id="header_navlist" class="nav navbar-nav">

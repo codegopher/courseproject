@@ -42,7 +42,7 @@
     <div class="col-sm-offset-4 col-sm-8">
       <div class="checkbox">
         <label>
-          <input type="checkbox" name="telegram_response" value="true"> Оповестить по telegram
+          <input type="checkbox" name="telegram_response" value="true"> Оповестить по Telegram
         </label>
       </div>
     </div>

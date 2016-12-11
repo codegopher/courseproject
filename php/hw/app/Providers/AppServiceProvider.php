@@ -27,25 +27,32 @@ class AppServiceProvider extends ServiceProvider
 	  Task::updated(function($task){
 	  	error_log("ServiceProvider: task has been updated");
 	  	if($task->solver_id) {
-	  		// send solved task to user
-	  	}
-	  	$connection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
-		$channel = $connection->channel();
-		$channel->queue_declare('email-out', true, false, false, false);
-		$channel->exchange_declare('X', 'topic', false, false, false);
-		$channel->queue_bind('email-out', 'X', '#');
-	  	$msg = new AMQPMessage($task->toJSON());
-	  	$channel->basic_publish($msg, 'X', 'recipient@example.com');
+		  	$connection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
+			$channel = $connection->channel();
+			$channel->queue_declare('email-out', true, false, false, false);
+			$channel->exchange_declare('X', 'topic', false, false, false);
+			$channel->queue_bind('email-out', 'X', '#');
+		  	$msg = new AMQPMessage($task->toJSON());
+		  	$channel->basic_publish($msg, 'X', 'recipient@example.com');
 
-	  	Queue::push(new SendTelegramNotification($task,"upd"));
+		  	Queue::push(new SendTelegramNotification($task,"upd"));
+	  	}
+
 
 	  });
 
 	  Task::created(function($task){
 	  	error_log("ServiceProvider: task has been created");
-	  	// Send to user somehow
+		  	$connection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
+			$channel = $connection->channel();
+			$channel->queue_declare('email-out', true, false, false, false);
+			$channel->exchange_declare('X', 'topic', false, false, false);
+			$channel->queue_bind('email-out', 'X', '#');
+		  	$msg = new AMQPMessage($task->toJSON());
+		  	$channel->basic_publish($msg, 'X', 'recipient@example.com');
+
+		  	Queue::push(new SendTelegramNotification($task,"crt"));
 	  });
-	  // mail("test@test.com", "Test subject", "Test line on current date" . date("Y-m-d H:i:s")); 
     }
 
     /**

@@ -105,6 +105,25 @@
                         </div>                    
                     </div>
 
+                    <div class="row col-md-4">
+                        <div class="form-group">
+                            <label class="control-label">Оповещения:</label>
+
+
+                                <div class="checkbox">
+                                    <label>
+                                        <input id="email-notify" type="checkbox" name="email-notify"> E-mail
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input id="tlg-notify" type="checkbox" name="tlg-notify"> Telegram
+                                    </label>
+                                </div>
+
+                        </div>                    
+                    </div>
+
                         <div class="form-group">
                             <div class="col-md-5 col-md-offset-5">
                                 <button type="submit" class="btn btn-primary">
